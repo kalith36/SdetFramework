@@ -141,8 +141,16 @@ public class TestBase {
 		js.executeScript("arguments[0].scrollIntoView(true);",element);
 	}
 
-	public static void webdriverWaitClick(WebElement element) {
+	public static void webdriverWaitClick(WebElement element,WebDriver driver) {
 		wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+		element.click();
+	}
+
+	public static void webdriverWaitClickByJS(WebElement element,WebDriver driver) {
+
+		wait = new WebDriverWait(driver, 100);
+		wait.until(WebDriver -> ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete"));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		element.click();
 	}
